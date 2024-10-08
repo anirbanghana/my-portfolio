@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FaBars, FaTimes } from 'react-icons/fa';
 
+// Navbar Container Styles
 const NavbarContainer = styled.nav`
   width: 100%;
   display: flex;
@@ -46,7 +47,9 @@ const NavLinks = styled.div`
     gap: 2rem;
     transition: transform 0.3s ease-in-out;
     transform: ${({ isOpen }) => (isOpen ? 'translateX(0)' : 'translateX(100%)')};
+    overflow-y: auto; /* Enable scrolling for long content */
     z-index: 999;
+    position: fixed; /* Keep the background fixed */
   }
 `;
 
@@ -84,8 +87,9 @@ const HamburgerMenu = styled.div`
   cursor: pointer;
 
   @media (max-width: 768px) {
-    display: block;
+    display: ${({ isOpen }) => (isOpen ? 'none' : 'block')}; /* Hide hamburger when menu is open */
     color: #333; /* Color of the icon */
+    z-index: 1001; /* Ensure hamburger is above other content */
   }
 `;
 
@@ -95,8 +99,9 @@ const CloseIcon = styled.div`
   top: 1.5rem;
   right: 1.5rem;
   cursor: pointer;
-  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
   color: #fff; /* White color for close icon on dark background */
+  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
+  z-index: 1002; /* Ensure close icon is above everything else in mobile menu */
 
   @media (min-width: 769px) {
     display: none; /* Hide close icon on larger screens */
@@ -131,6 +136,15 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden'; // Disable scrolling on body
+    } else {
+      document.body.style.overflow = 'auto'; // Enable scrolling on body
+    }
+  }, [menuOpen]);
 
   // Handle Link Click
   const handleLinkClick = (link) => {
@@ -185,7 +199,7 @@ const Navbar = () => {
       </NavLinks>
 
       {/* Hamburger Menu Icon */}
-      <HamburgerMenu onClick={() => setMenuOpen(true)}>
+      <HamburgerMenu isOpen={menuOpen} onClick={() => setMenuOpen(true)}>
         <FaBars size={24} />
       </HamburgerMenu>
 

@@ -15,7 +15,7 @@ const AboutContainer = styled.section`
 const AboutHeading = styled.h2`
   font-size: 2.5rem;
   color: #333;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
 `;
 
 const AboutText = styled.p`
