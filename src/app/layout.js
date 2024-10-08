@@ -1,6 +1,7 @@
 // layout.js
 import GlobalStyle from './globalStyles';
-import Navbar from './Navbar'; // Adjust the path if needed
+import Navbar from './Navbar';
+import Footer from './Footer';
 
 export const metadata = {
   title: 'My Portfolio',
@@ -14,6 +15,7 @@ export default function RootLayout({ children }) {
         <GlobalStyle />
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

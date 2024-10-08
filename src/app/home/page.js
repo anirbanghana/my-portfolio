@@ -1,10 +1,10 @@
 'use client';
 import styled from 'styled-components';
-import { FaGithub, FaTwitter, FaLinkedin, FaMedium } from 'react-icons/fa';
+import { FaGithub, FaTwitter, FaLinkedin, FaMedium, FaEnvelope } from 'react-icons/fa';
 
 const HomeContainer = styled.section`
   display: flex;
-  flex-direction: row; /* Row layout for larger screens */
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   min-height: 100vh;
@@ -14,7 +14,7 @@ const HomeContainer = styled.section`
   text-align: left;
 
   @media (max-width: 768px) {
-    flex-direction: column; /* Column layout for smaller screens */
+    flex-direction: column;
     text-align: center;
     padding: 1rem;
     margin-top:4rem;
@@ -28,9 +28,9 @@ max-width: 600px;
 
 const Title = styled.h1`
   font-size: 3rem;
-  font-weight: 700; /* Increased font weight for better visibility */
+  font-weight: 700;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 0.5rem; /* Add some space below the title */
+  margin-bottom: 0.5rem;
 `;
 
 const Subtitle = styled.h2`
@@ -39,7 +39,7 @@ const Subtitle = styled.h2`
   opacity: 0.8;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem; /* Space between items */
+  gap: 0.5rem;
     
   @media (max-width: 768px) {
     justify-content:center;
@@ -48,7 +48,7 @@ const Subtitle = styled.h2`
 
 const SocialIconsContainer = styled.div`
   display: flex;
-  gap: 1.5rem; /* Space between icons */
+  gap: 1.5rem;
   margin-top: 1rem;
 
    @media (max-width: 768px) {
@@ -58,11 +58,11 @@ const SocialIconsContainer = styled.div`
 
 const SocialIcon = styled.a`
   color: #333;
-  font-size: 2rem; /* Slightly larger icons */
+  font-size: 2rem;
   transition: color 0.3s ease;
 
   &:hover {
-    color: #0070f3; /* Color change on hover */
+    color: #0070f3;
   }
 `;
 
@@ -74,7 +74,7 @@ const CTAButton = styled.a`
   color: white;
   border: none;
   border-radius: 5px;
-  font-size: 1.1rem; /* Slightly larger button text */
+  font-size: 1.1rem;
   text-decoration: none;
   cursor: pointer;
   transition: background 0.3s, transform 0.3s;
@@ -96,22 +96,22 @@ const ImageContainer = styled.div`
   }
 
   img {
-    border-radius: 50%; /* Circular image */
-    width: 300px; /* Adjust size as needed */
-    height: 300px; /* Adjust size as needed */
-    object-fit: cover; /* Maintain aspect ratio */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
-    transition: transform 0.3s; /* Add a hover effect */
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
   }
 
   img:hover {
-    transform: scale(1.05); /* Slight zoom on hover */
+    transform: scale(1.05);
   }
 
   @media (max-width: 768px) {
     img {
-      width: 200px; /* Smaller size for mobile */
-      height: 200px; /* Smaller size for mobile */
+      width: 200px;
+      height: 200px;
     }
   }
 `;
@@ -130,9 +130,12 @@ export default function HomePage() {
         
         {/* Social Icons Container */}
         <SocialIconsContainer>
-          <SocialIcon href="https://github.com/anirbanghana" target="_blank" rel="noopener noreferrer">
+        <SocialIcon href="https://github.com/anirbanghana" target="_blank" rel="noopener noreferrer">
             <FaGithub />
           </SocialIcon>
+          <SocialIcon href="mailto:anirbanghana@gmail.com" target="_blank" rel="noopener noreferrer">
+          <FaEnvelope />
+        </SocialIcon>
           <SocialIcon href="https://x.com/digitalanirbang" target="_blank" rel="noopener noreferrer">
             <FaTwitter />
           </SocialIcon>

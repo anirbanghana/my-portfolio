@@ -1,128 +1,109 @@
 'use client';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
+// Styled Components
 const ContactContainer = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   padding: 4rem 1.5rem;
-  background: #f7f8fa;
+  background: #fff;
   min-height: 100vh;
   text-align: center;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
 `;
 
 const ContactHeading = styled.h2`
   font-size: 2.5rem;
   color: #333;
   margin: 2rem 0;
-  text-transform: uppercase;
-  letter-spacing: 1px;
 `;
 
 const ContactForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  align-items: center;
+  gap: 1.5rem;
   max-width: 500px;
+  margin: auto;
+`;
+
+const Input = styled.input`
   width: 100%;
-  margin: 0 auto;
-  padding: 2rem;
-  background: #ffffff;
+  padding: 1rem;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-`;
-
-const FormInput = styled.input`
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
   font-size: 1rem;
-  transition: border 0.3s;
-  
-  &:focus {
-    border-color: #0070f3;
-    outline: none;
-  }
 `;
 
-const FormTextArea = styled.textarea`
-  padding: 0.75rem;
+const TextArea = styled.textarea`
+  width: 100%;
+  padding: 1rem;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 1rem;
   resize: none;
-  transition: border 0.3s;
-
-  &:focus {
-    border-color: #0070f3;
-    outline: none;
-  }
 `;
 
 const SubmitButton = styled.button`
-  padding: 0.75rem;
-  background: #0070f3;
-  color: #fff;
+  padding: 1rem 2rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
+  background-color: #0070f3;
+  color: #fff;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+  transition: background-color 0.3s;
 
   &:hover {
-    background: #005bb5;
-    transform: translateY(-2px);
-  }
-
-  &:active {
-    transform: translateY(0);
+    background-color: #005bb5;
   }
 `;
 
-const FeedbackMessage = styled.p`
-  margin-top: 1rem;
-  color: green;
+const Message = styled.p`
+  color: ${({ isSuccess }) => (isSuccess ? 'green' : 'red')};
 `;
 
-export default function ContactPage() {
+// Contact Component
+const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: '',
   });
 
-  const [feedback, setFeedback] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Dummy submission logic; replace with actual email sending logic.
-    console.log('Form Data Submitted:', formData);
-
-    // Simulate successful submission
-    setFeedback('Thank you for your message! I will get back to you soon.');
-
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      message: '',
+    const response = await fetch('https://formspree.io/f/xnnqalaz', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams(formData),
     });
+
+    if (response.ok) {
+      setSuccessMessage('Your message has been sent successfully!');
+      setErrorMessage('');
+      setFormData({ name: '', email: '', message: '' }); // Reset form
+    } else {
+      setErrorMessage('Failed to send your message. Please try again later.');
+      setSuccessMessage('');
+    }
   };
 
   return (
     <ContactContainer id="contact">
       <ContactHeading>Contact Me</ContactHeading>
       <ContactForm onSubmit={handleSubmit}>
-        <FormInput
+        <Input
           type="text"
           name="name"
           placeholder="Your Name"
@@ -130,7 +111,7 @@ export default function ContactPage() {
           onChange={handleChange}
           required
         />
-        <FormInput
+        <Input
           type="email"
           name="email"
           placeholder="Your Email"
@@ -138,17 +119,20 @@ export default function ContactPage() {
           onChange={handleChange}
           required
         />
-        <FormTextArea
+        <TextArea
           name="message"
           placeholder="Your Message"
+          rows="5"
           value={formData.message}
           onChange={handleChange}
-          rows="5"
           required
         />
         <SubmitButton type="submit">Send Message</SubmitButton>
       </ContactForm>
-      {feedback && <FeedbackMessage>{feedback}</FeedbackMessage>}
+      {successMessage && <Message isSuccess>{successMessage}</Message>}
+      {errorMessage && <Message>{errorMessage}</Message>}
     </ContactContainer>
   );
-}
+};
+
+export default Contact;
