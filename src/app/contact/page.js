@@ -80,7 +80,7 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch('https://formspree.io/f/xnnqalaz', {
+    const response = await fetch(process.env.NEXT_PUBLIC_CONTACT_FORM_URL, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
