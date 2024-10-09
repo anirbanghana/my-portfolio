@@ -80,23 +80,34 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch(process.env.NEXT_PUBLIC_CONTACT_FORM_URL, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams(formData),
-    });
+    try {
+      const response = await fetch(process.env.NEXT_PUBLIC_CONTACT_FORM_URL, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(formData),
+      });
 
-    if (response.ok) {
-      setSuccessMessage('Your message has been sent successfully!');
-      setErrorMessage('');
-      setFormData({ name: '', email: '', message: '' }); // Reset form
-    } else {
-      setErrorMessage('Failed to send your message. Please try again later.');
+      if (response.ok) {
+        setSuccessMessage('Your message has been sent successfully!');
+        setErrorMessage('');
+        setFormData({ name: '', email: '', message: '' }); // Reset form
+      } else {
+        setErrorMessage('Failed to send your message. Please try again later.');
+        setSuccessMessage('');
+      }
+    } catch (error) {
+      setErrorMessage('Something went wrong. Please try again.');
       setSuccessMessage('');
     }
+
+    // Clear the message after 3 seconds
+    setTimeout(() => {
+      setSuccessMessage('');
+      setErrorMessage('');
+    }, 3000);
   };
 
   return (
