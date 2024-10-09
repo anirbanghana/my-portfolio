@@ -81,6 +81,7 @@ const CTAButton = styled.a`
 
   &:hover {
     background: #005bb5;
+    color:white;
     transform: translateY(-2px);
   }
 `;
@@ -123,9 +124,9 @@ export default function HomePage() {
         <Title>Hello, I'm Anirban Ghana</Title>
         <Subtitle>
           <span>Full Stack Developer</span> | 
-          <span>MySQL</span> | 
-          <span>Java</span> |
-          <span>Software Developer</span>
+          <span>Node.js & MongoDB</span> | 
+          <span>Next.js</span> |
+          <span>Exploring Spring Boot</span>
         </Subtitle>
         
         {/* Social Icons Container */}
@@ -147,7 +148,7 @@ export default function HomePage() {
           </SocialIcon>
         </SocialIconsContainer>
 
-        <CTAButton href="/path/to/your/cv.pdf" download>
+        <CTAButton href="/pdf/cv.pdf" download>
           Download CV
         </CTAButton>
       </TextContainer>
